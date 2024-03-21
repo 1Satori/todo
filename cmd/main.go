@@ -9,7 +9,6 @@ import (
 	todo "todo-app"
 	"todo-app/pkg/handler"
 	"todo-app/pkg/repository"
-	"todo-app/pkg/repository/database/mysql"
 	"todo-app/pkg/service"
 )
 
@@ -23,7 +22,7 @@ func main() {
 		logrus.Fatalf("error loading env variables: %s", err.Error())
 	}
 
-	db, err := mysql.NewMySqlDB(&mysql.Config{
+	db, err := repository.NewMySqlDB(&repository.Config{
 		Username: viper.GetString("db.username"),
 		Password: os.Getenv("DB_PASSWORD"),
 		Port:     viper.GetString("db.port"),
