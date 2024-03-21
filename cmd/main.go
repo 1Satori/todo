@@ -2,8 +2,10 @@ package main
 
 import (
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"github.com/spf13/viper"
 	"log"
+	"os"
 	todo "todo-app"
 	"todo-app/pkg/handler"
 	"todo-app/pkg/repository"
@@ -16,9 +18,13 @@ func main() {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
 
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error loading env variables: %s", err.Error())
+	}
+
 	db, err := mysql.NewMySqlDB(&mysql.Config{
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Password: os.Getenv("DB_PASSWORD"),
 		Port:     viper.GetString("db.port"),
 		Host:     viper.GetString("db.host"),
 		DBName:   viper.GetString("db.dbname"),

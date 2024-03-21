@@ -2,7 +2,6 @@ port: "8080"
 
 db:
   username: "root"
-  password: "260184"
   port: "3306"
   host: "localhost"
   dbname: "todo_app"
