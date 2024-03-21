@@ -5,4 +5,4 @@ db:
   password: "260184"
   port: "3306"
   host: "localhost"
-  dbname: "todo-app"
+  dbname: "todo_app"
