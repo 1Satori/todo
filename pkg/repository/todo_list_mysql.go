@@ -48,3 +48,13 @@ func (r *TodoListMysql) GetAll(userId int) ([]todo.TodoList, error) {
 
 	return lists, err
 }
+
+func (r *TodoListMysql) GetById(userId, listId int) (todo.TodoList, error) {
+	var list todo.TodoList
+
+	query := fmt.Sprintf("SELECT tl.id, tl.title, tl.description FROM %s AS tl INNER JOIN %s "+
+		"AS ul ON tl.id = ul.list_id WHERE ul.user_id = ? AND ul.list_id = ?", todoListTable, usersListsTable)
+	err := r.db.Get(&list, query, userId, listId)
+
+	return list, err
+}
