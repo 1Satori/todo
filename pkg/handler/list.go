@@ -102,7 +102,7 @@ func (h *Handler) updateList(c *gin.Context) {
 	})
 }
 
-func (h *Handler) DeleteList(c *gin.Context) {
+func (h *Handler) deleteList(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
 		return
