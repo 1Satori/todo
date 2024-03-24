@@ -43,7 +43,7 @@ func (r *TodoItemMysql) Create(listId int, item todo.TodoItem) (int, error) {
 func (r *TodoItemMysql) GetAll(userId, listId int) ([]todo.TodoItem, error) {
 	var items []todo.TodoItem
 
-	query := fmt.Sprintf("SELECT * FROM %s ti INNER JOIN %s li ON li.item_id = ti.id INNER JOIN %s ul"+
+	query := fmt.Sprintf("SELECT ti.id, ti.title, ti.description, ti.done FROM %s ti INNER JOIN %s li ON li.item_id = ti.id INNER JOIN %s ul"+
 		" ON ul.list_id = li.list_id WHERE li.list_id = ? AND ul.user_id = ?",
 		todoItemsTable, listsItemsTable, usersListsTable)
 
