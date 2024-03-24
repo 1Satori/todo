@@ -10,7 +10,7 @@ type TodoItemService struct {
 	listRepo repository.TodoList
 }
 
-func NewTodoItem(repo repository.TodoItem, listRepo repository.TodoList) *TodoItemService {
+func NewTodoItemService(repo repository.TodoItem, listRepo repository.TodoList) *TodoItemService {
 	return &TodoItemService{repo: repo, listRepo: listRepo}
 }
 
