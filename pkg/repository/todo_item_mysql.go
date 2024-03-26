@@ -82,27 +82,21 @@ func (r *TodoItemMysql) Update(userId, itemId int, input todo.UpdateItemInput) e
 	argId := 1
 
 	if input.Title != nil {
-		setValues = append(setValues, fmt.Sprintf("title=$%d", argId))
+		setValues = append(setValues, fmt.Sprintf("title = $%d", argId))
 		args = append(args, *input.Title)
 		argId++
 	}
 
 	if input.Done != nil {
-		setValues = append(setValues, fmt.Sprintf("done=$%d", argId))
+		setValues = append(setValues, fmt.Sprintf("done = $%d", argId))
 		args = append(args, *input.Done)
 		argId++
 	}
 
 	setQuery := strings.Join(setValues, ", ")
 
-	query := fmt.Sprintf("UPDATE %s ti SET %s FROM %s li, %s ul WHERE ti.id = li.item_id AND li.list_id = ul.list_id AND ul.user_od = ? AND ti.id = ?",
-		todoItemsTable, setQuery, listsItemsTable, usersListsTable, argId, argId+1)
-
-	// todo: переписать синтаксис запроса
-
-	//query := fmt.Sprintf("UPDATE %s ti INNER JOIN %s li ON ti.id = li.item_id INNER JOIN %s ul ON li.list_id = ul.list_id SET %s WHERE ul.user_id = ? AND ti.id = ?",
-	//	todoItemsTable, listsItemsTable, usersListsTable, setQuery)
-	// ответ ChatGPT
+	query := fmt.Sprintf("UPDATE %s AS ti INNER JOIN %s AS li ON ti.id = li.item_id INNER JOIN %s AS ul ON li.list_id = ul.list_id SET %s WHERE ul.user_id = ? AND ti.id = ?",
+		todoItemsTable, listsItemsTable, usersListsTable, setQuery)
 
 	args = append(args, userId, itemId)
 
